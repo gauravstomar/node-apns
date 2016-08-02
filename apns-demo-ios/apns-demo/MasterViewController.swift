@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import MessageUI
-
+import AFDateHelper
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate {
 
@@ -22,7 +22,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "UDID", style: .Done, target: self, action: #selector(MasterViewController.rightButtonAction(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "UUID", style: .Plain, target: self, action: #selector(MasterViewController.rightButtonAction(_:)))
 
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -46,7 +46,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
         if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenString") {
 
-            let alertMessage = UIAlertController(title: "Device UDID", message: "\(deviceToken)", preferredStyle: .Alert)
+            let alertMessage = UIAlertController(title: "Device UUID", message: "\(deviceToken)", preferredStyle: .Alert)
 
             alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
 
@@ -81,11 +81,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
         mailComposerVC.setToRecipients(["gauravs@exzeoindia.com"])
-        mailComposerVC.setSubject("APNS demo app UDID")
+        mailComposerVC.setSubject("APNS demo app UUID")
 
         if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenString"), let deviceTokenData = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenData") {
             
-            mailComposerVC.setMessageBody("UDID Raw - \(deviceTokenData)\n\n UDID String - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
+            mailComposerVC.setMessageBody("UUID Raw - \(deviceTokenData)\n\n UUID String - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
         }
         
         return mailComposerVC
@@ -193,7 +193,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
-        cell.textLabel!.text = " \(object.valueForKey("message")!.description)  \(object.valueForKey("timeStamp")!.description) "
+        
+        if let time: NSDate = object.valueForKey("timeStamp") as? NSDate {
+            cell.textLabel!.text = " \(object.valueForKey("message")!.description)  (\(time.toString(format: .Custom("dd MMM yyyy HH:mm:ss"))))"
+        }
+        
     }
 
     // MARK: - Fetched results controller
