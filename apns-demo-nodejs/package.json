@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "apns-demo",
+  "description" : "APNS demo app",
+  "version": "0.0.1",
+  "main" : "index.js",
+  "dependencies": {
+    "q": "latest",
+    "apn": "latest",
+    "debug": "latest",
+    "node-forge": "latest"
+  }
+}

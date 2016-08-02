@@ -74,8 +74,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         mailComposerVC.setToRecipients(["gauravs@exzeoindia.com"])
         mailComposerVC.setSubject("APNS demo app UDID")
 
-        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") {
-            mailComposerVC.setMessageBody("UDID - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
+        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken"), let deviceTokenData = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenData") {
+            
+            mailComposerVC.setMessageBody("UDID String - \(deviceToken)\n\n UDID Raw - \(deviceTokenData)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
         }
         
         return mailComposerVC

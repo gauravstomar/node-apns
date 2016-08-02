@@ -47,7 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         let deviceTokenString: String = (deviceToken.description as NSString).stringByTrimmingCharactersInSet(characterSet).stringByReplacingOccurrencesOfString( " ", withString: "") as String
         
-        defaults.setObject(deviceTokenString, forKey: "DeviceToken")
+        defaults.setObject(deviceToken, forKey: "DeviceTokenData")
+        defaults.setObject(deviceTokenString, forKey: "DeviceTokenString")
         
     }
     

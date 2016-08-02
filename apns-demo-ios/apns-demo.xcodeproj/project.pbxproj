@@ -129,6 +129,7 @@
 				TargetAttributes = {
 					CD9A1D2E1D507076008EA3E9 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 8GWRW3B7AB;
 					};
 				};
 			};
@@ -335,10 +336,13 @@
 			baseConfigurationReference = CAC78059405CC6ECBED84DCE /* Pods-apns-demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Singh (F99PP32T5F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gaurav Singh (F99PP32T5F)";
 				INFOPLIST_FILE = "apns-demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.exzeo.apns-demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.typtap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1bdd1cce-7104-4ba2-b1a7-e527640ebdd4";
 			};
 			name = Debug;
 		};
@@ -347,10 +351,13 @@
 			baseConfigurationReference = 0A21C18A3CE58CBC4CA5D874 /* Pods-apns-demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gaurav Singh (F99PP32T5F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Gaurav Singh (F99PP32T5F)";
 				INFOPLIST_FILE = "apns-demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.exzeo.apns-demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.typtap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1bdd1cce-7104-4ba2-b1a7-e527640ebdd4";
 			};
 			name = Release;
 		};
