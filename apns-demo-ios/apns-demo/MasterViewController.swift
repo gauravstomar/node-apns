@@ -8,8 +8,10 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+
+class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
@@ -36,7 +38,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") {
 
             let alertMessage = UIAlertController(title: "Device UDID", message: "\(deviceToken)", preferredStyle: .Alert)
+
             alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+
+            alertMessage.addAction(UIAlertAction(title: "Email", style: .Default, handler: { alert in
+
+                let mailComposeViewController = self.configuredMailComposeViewController()
+                
+                if MFMailComposeViewController.canSendMail() {
+                    self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+                } else {
+                    self.showSendMailErrorAlert()
+                }
+
+            }))
+            
+            
             self.presentViewController(alertMessage, animated: true, completion: nil)
 
         } else {
@@ -49,7 +66,37 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     }
     
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients(["gauravs@exzeoindia.com"])
+        mailComposerVC.setSubject("APNS demo app UDID")
+
+        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") {
+            mailComposerVC.setMessageBody("UDID - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
+        }
+        
+        return mailComposerVC
+        
+    }
     
+    func showSendMailErrorAlert() {
+        
+        let alertMessage = UIAlertController(title: "Could not send email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: .Alert)
+        alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertMessage, animated: true, completion: nil)
+
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
