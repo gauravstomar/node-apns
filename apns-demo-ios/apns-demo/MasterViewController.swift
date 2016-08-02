@@ -83,7 +83,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         mailComposerVC.setToRecipients(["gauravs@exzeoindia.com"])
         mailComposerVC.setSubject("APNS demo app UDID")
 
-        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken"), let deviceTokenData = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenData") {
+        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenString"), let deviceTokenData = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenData") {
             
             mailComposerVC.setMessageBody("UDID Raw - \(deviceTokenData)\n\n UDID String - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
         }
@@ -193,7 +193,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
-        cell.textLabel!.text = object.valueForKey("message")!.description
+        cell.textLabel!.text = " \(object.valueForKey("message")!.description)  \(object.valueForKey("timeStamp")!.description) "
     }
 
     // MARK: - Fetched results controller

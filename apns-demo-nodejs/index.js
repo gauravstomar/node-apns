@@ -9,8 +9,8 @@
 
 
 var apn = require('apn');
-//"", 
-var tokens = ["<6f63d232 950b3144 a83c5b2c 4b6f1533 943ae98b 84fc7f01 eca6c3ae f9f7eef6>"];
+
+var tokens = [{"token": "<1e770314 ec0350a4 c1be3b5f a3fe0589 81d663e8 e0c3438b db9ef4e7 0f53479b>", "name": "Gaurav"}];
 
 
 if(tokens.length == 0) {
@@ -62,13 +62,14 @@ service.on("socketError", console.error);
 
 //Finally Sending Notifications
 console.log("Sending a tailored notification to %d devices", tokens.length);
-tokens.forEach(function(token, i) {
+tokens.forEach(function(payload, i) {
 
     var note = new apn.notification();
-    note.setAlertText("Hello, gauravs! You are number: " + i);
-    note.badge = i;
+    note.setAlertText("Hello, " + payload.name);
+    note.badge = Math.floor((Math.random() * 99));
 
-    service.pushNotification(note, token);
-    
+    service.pushNotification(note, payload.token);
+
 });
+
 
