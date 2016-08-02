@@ -9,8 +9,8 @@
 
 
 var apn = require('apn');
-
-var tokens = ["<6f63d232 950b3144 a83c5b2c 4b6f1533 943ae98b 84fc7f01 eca6c3ae f9f7eef6>", "6f63d232950b3144a83c5b2c4b6f1533943ae98b84fc7f01eca6c3aef9f7eef6"];
+//"", 
+var tokens = ["<6f63d232 950b3144 a83c5b2c 4b6f1533 943ae98b 84fc7f01 eca6c3ae f9f7eef6>"];
 
 
 if(tokens.length == 0) {
@@ -60,13 +60,15 @@ service.on("disconnected", function() {
 service.on("socketError", console.error);
 
 
-//Final Sending Notifications
+//Finally Sending Notifications
 console.log("Sending a tailored notification to %d devices", tokens.length);
 tokens.forEach(function(token, i) {
+
     var note = new apn.notification();
     note.setAlertText("Hello, gauravs! You are number: " + i);
     note.badge = i;
 
     service.pushNotification(note, token);
+    
 });
 

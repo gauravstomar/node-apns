@@ -1,2 +1,5 @@
 # node-apns
-Node.js Sample Code for Apple Push Notification
+Node.js/iOS Sample Code for Apple Push Notification
+
+# depedency
+https://github.com/argon/node-apn (APNS module for Node.js)

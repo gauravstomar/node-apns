@@ -65,14 +65,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if let aps = userInfo["aps"] as? NSDictionary {
             if let alert = aps["alert"] as? NSDictionary {
                 if let message = alert["message"] as? String {
-                    controller.insertNewObject(message)
+                    updateNotification(message)
                 }
             } else if let alert = aps["alert"] as? String {
-                controller.insertNewObject(alert)
+                updateNotification(alert)
             }
         }
         
     }
+    
+    func updateNotification(message: String) {
+
+        NSNotificationCenter.defaultCenter().postNotificationName("APNSNotificationRecived", object: nil, userInfo: ["message": message])
+
+    }
+    
     //APNS methods ends
 
     

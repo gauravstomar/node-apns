@@ -29,13 +29,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.notificationRecived(_:)), name: "APNSNotificationRecived", object: nil)
+        
     }
     
-    
+    func notificationRecived(notification: NSNotification) {
+        
+        if let message = notification.userInfo?["message"] {
+            insertNewObject(message as! String)
+        }
+
+    }
     
     func rightButtonAction(sender: AnyObject) {
 
-        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") {
+        if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenString") {
 
             let alertMessage = UIAlertController(title: "Device UDID", message: "\(deviceToken)", preferredStyle: .Alert)
 
@@ -76,7 +85,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
         if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken"), let deviceTokenData = NSUserDefaults.standardUserDefaults().objectForKey("DeviceTokenData") {
             
-            mailComposerVC.setMessageBody("UDID String - \(deviceToken)\n\n UDID Raw - \(deviceTokenData)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
+            mailComposerVC.setMessageBody("UDID Raw - \(deviceTokenData)\n\n UDID String - \(deviceToken)\n\n Device Name - \(UIDevice.currentDevice().name)\n\n Device - \(UIDevice.currentDevice().systemName) [\(UIDevice.currentDevice().systemVersion)]", isHTML: false)
         }
         
         return mailComposerVC
@@ -117,7 +126,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // If appropriate, configure the new managed object.
         // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
         newManagedObject.setValue(NSDate(), forKey: "timeStamp")
-             
+        newManagedObject.setValue(message, forKey: "message")
+
         // Save the context.
         do {
             try context.save()
@@ -183,7 +193,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
-        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
+        cell.textLabel!.text = object.valueForKey("message")!.description
     }
 
     // MARK: - Fetched results controller
