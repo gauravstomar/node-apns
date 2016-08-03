@@ -54,7 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         defaults.setObject(deviceToken, forKey: "DeviceTokenData")
         defaults.setObject(deviceTokenString, forKey: "DeviceTokenString")
-        
+
+        Crashlytics.sharedInstance().setUserIdentifier(deviceTokenString)
+
     }
     
 
