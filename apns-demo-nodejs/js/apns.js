@@ -27,7 +27,7 @@ var options = {
 var service = new apn.connection(options);
 
 service.on("connected", function() {
-    console.log("Connected");
+    //console.log("Connected");
 });
 
 service.on("transmitted", function(notification, device) {
@@ -42,21 +42,25 @@ service.on("transmissionError", function(errCode, notification, device) {
 });
 
 service.on("timeout", function () {
-    console.log("Connection Timeout");
+    //console.log("Connection Timeout");
 });
 
 service.on("disconnected", function() {
-    console.log("Disconnected from APNS");
+    //console.log("Disconnected from APNS");
 });
 
 service.on("socketError", console.error);
 
 
-exports.sendNotification = function (users) {
+exports.sendNotification = function (users, message) {
 
     if (users.length == 0) {
         console.log("Please set token to a valid device token for the push notification service");
         process.exit();
+    }
+
+    if (message == "") {
+        message = "Hello, " + payload["name"]
     }
 
     //Finally Sending Notifications
@@ -64,7 +68,7 @@ exports.sendNotification = function (users) {
     users.forEach(function(payload, i) {
 
         var note = new apn.notification();
-        note.setAlertText("Hello, " + payload["name"]);
+        note.setAlertText(message);
         note.badge = Math.floor((Math.random() * 99));
 
         service.pushNotification(note, payload["uuid"]);

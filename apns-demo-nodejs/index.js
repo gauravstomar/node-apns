@@ -10,10 +10,13 @@
 var apns = require(__dirname + '/js/apns.js');
 var express = require('express');
 var fs = require("fs");
+var jsonFile = __dirname + "/json/users.json"
 
 var app = express();
-
+var bodyParser = require('body-parser');
 var jsonFile = __dirname + "/json/users.json"
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 //Request handling
 app.get('/', function (req, res) {
@@ -50,8 +53,6 @@ app.get('/listUsers', function (req, res) {
 
 
 //Add device 	POST 	/addUser
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.post('/addUser', urlencodedParser, function (req, res) {
 
 	console.log("Add device")
@@ -77,31 +78,6 @@ app.post('/addUser', urlencodedParser, function (req, res) {
 })
 
 
-//Send notification 	GET 	:id
-app.get('/notify/:id', function (req, res) {
-   
-   console.log( 'notify apns' );
-
-   fs.readFile( jsonFile, 'utf8', function (err, data) {
-
-   	users = JSON.parse( data );
-
-	if (users.length > 0 && users.length > req.params.id) {
-
-		var user = users[req.params.id] 
-	   	apns.sendNotification([user])
-	   	console.log( user );
-		res.end( JSON.stringify(user));   	
-
-   	} else {
-
-		res.end( "No user found" );   	
-		
-   	}
-
-   });
-
-})
 
 
 
@@ -134,8 +110,35 @@ app.delete('/delete/:id', function (req, res) {
 
 
 
-//Brodcast 		GET 	/brodcast
-app.get('/brodcast', function (req, res) {
+//Send notification 	GET 	:id
+app.post('/notify', urlencodedParser, function (req, res) {
+   
+   console.log( 'notify apns' );
+
+   fs.readFile( jsonFile, 'utf8', function (err, data) {
+
+   	users = JSON.parse( data );
+
+	if (users.length > 0 && users.length > parseInt(req.body.id)) {
+
+		var user = users[parseInt(req.body.id)] 
+	   	apns.sendNotification([user], req.body.message)
+	   	console.log( user );
+		res.end( JSON.stringify(user));   	
+
+   	} else {
+
+		res.end( "No user found" );   	
+		
+   	}
+
+   });
+
+})
+
+
+//Brodcast notification		GET 	/brodcast
+app.post('/brodcast', urlencodedParser, function (req, res) {
    
    console.log( 'brodcast apns' );
 
@@ -145,7 +148,7 @@ app.get('/brodcast', function (req, res) {
    	users = JSON.parse( data );
    	console.log( users );
 
-   	apns.sendNotification(users)
+   	apns.sendNotification(users, req.body.message)
 
    	res.end( JSON.stringify({"total-devices": users.length}));
 

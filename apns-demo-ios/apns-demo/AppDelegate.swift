@@ -60,7 +60,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func updateNotification(message: String) {
+
+        NSNotificationCenter.defaultCenter().postNotificationName("APNSNotificationRecived", object: nil, userInfo: ["message": message])
+
+    }
+    
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         
         if let aps = userInfo["aps"] as? NSDictionary {
             if let alert = aps["alert"] as? NSDictionary {
@@ -71,19 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 updateNotification(alert)
             }
         }
-        
-    }
-    
-    func updateNotification(message: String) {
-
-        NSNotificationCenter.defaultCenter().postNotificationName("APNSNotificationRecived", object: nil, userInfo: ["message": message])
-
-    }
-    
-    
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        
-        
         
     }
     
