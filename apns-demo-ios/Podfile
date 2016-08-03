@@ -5,7 +5,9 @@ target "apns-demo" do
     use_frameworks!
 
     pod 'AFDateHelper'
-
+    pod 'Fabric'
+    pod 'Crashlytics'
+    
 end
 
 

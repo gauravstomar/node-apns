@@ -107,6 +107,7 @@
 				CD9A1D2D1D507076008EA3E9 /* Resources */,
 				D3A6DDADF005B60472D6575D /* [CP] Embed Pods Frameworks */,
 				A17DD5C837850C7A0A63D927 /* [CP] Copy Pods Resources */,
+				CD3786481D52246D0070831F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -194,6 +195,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-apns-demo/Pods-apns-demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CD3786481D52246D0070831F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 848fada6b0dfb520542dd10862bded38fddc9f83 bf35904c8d38bbc3f043b06b8e80a1eed9994ab6d439b24c3e1085d57792466e";
 		};
 		D3A6DDADF005B60472D6575D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
