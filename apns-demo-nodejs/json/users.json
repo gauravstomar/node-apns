@@ -1,17 +1,1 @@
-{
- "user1" : {
-  "name" : "Gaurav",
-  "uuid" : "password1",
-  "id": 1
-},
-"user2" : {
-  "name" : "Himanshu",
-  "uuid" : "password2",
-  "id": 2
-},
-"user3" : {
-  "name" : "Satish",
-  "uuid" : "password3",
-  "id": 3
-}
-}
+[{"name":"Gaurav Three","uuid":"<5a57f65a afd5de7f ebe29781 b1ee3afe 4b95af94 69ebf04a bd373c0d 4146045c>"},{"name":"Gaurav Two","uuid":"<5a57f65a afd5de7f ebe29781 b1ee3afe 4b95af94 69ebf04a bd373c0d 4146045c>"}]

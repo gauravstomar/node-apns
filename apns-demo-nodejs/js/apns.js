@@ -10,14 +10,6 @@
 
 var apn = require('apn');
 
-var tokens = [{"token": "<1e770314 ec0350a4 c1be3b5f a3fe0589 81d663e8 e0c3438b db9ef4e7 0f53479b>", "name": "Gaurav"}];
-
-
-if(tokens.length == 0) {
-	console.log("Please set token to a valid device token for the push notification service");
-	process.exit();
-}
-
 var ca = ['certificates/entrust_2048_ca.cer'];
 
 /* Connection Options */
@@ -60,16 +52,29 @@ service.on("disconnected", function() {
 service.on("socketError", console.error);
 
 
-//Finally Sending Notifications
-console.log("Sending a tailored notification to %d devices", tokens.length);
-tokens.forEach(function(payload, i) {
+exports.sendNotification = function (users) {
 
-    var note = new apn.notification();
-    note.setAlertText("Hello, " + payload.name);
-    note.badge = Math.floor((Math.random() * 99));
+    if (users.length == 0) {
+        console.log("Please set token to a valid device token for the push notification service");
+        process.exit();
+    }
 
-    service.pushNotification(note, payload.token);
+    //Finally Sending Notifications
+    console.log("Sending a tailored notification to %d devices", users.length);
+    users.forEach(function(payload, i) {
 
-});
+        var note = new apn.notification();
+        note.setAlertText("Hello, " + payload["name"]);
+        note.badge = Math.floor((Math.random() * 99));
+
+        service.pushNotification(note, payload["uuid"]);
+
+    });
+
+}
+
+
+
+
 
 
