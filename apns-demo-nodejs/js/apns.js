@@ -7,6 +7,7 @@
 //
 
 
+var lastBadageCount = 1
 
 var apn = require('apn');
 
@@ -63,13 +64,15 @@ exports.sendNotification = function (users, message) {
         message = "Hello, " + payload["name"]
     }
 
+    lastBadageCount++
+
     //Finally Sending Notifications
     console.log("Sending a tailored notification to %d devices", users.length);
     users.forEach(function(payload, i) {
 
         var note = new apn.notification();
         note.setAlertText(message);
-        note.badge = Math.floor((Math.random() * 99));
+        note.badge = lastBadageCount;
 
         service.pushNotification(note, payload["uuid"]);
 
