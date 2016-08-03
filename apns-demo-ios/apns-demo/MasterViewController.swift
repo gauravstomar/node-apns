@@ -29,6 +29,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
+        //Rest Application Icon Badge Number
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.notificationRecived(_:)), name: "APNSNotificationRecived", object: nil)
         
