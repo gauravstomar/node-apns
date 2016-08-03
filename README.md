@@ -5,7 +5,7 @@ Node.js/iOS Sample Code for Apple Push Notification
 https://github.com/argon/node-apn (APNS module for Node.js)
 
 # API
-API | Description
+APIs | Description
 ------|------------
 **List devices** | GET /listUsers
 **Add device** | POST /addUser [name, uuid]
