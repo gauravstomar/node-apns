@@ -7,69 +7,111 @@
 //
 
 
+var express = require('express');
+var fs = require("fs");
 
-var apn = require('apn');
+var app = express();
 
-var tokens = [{"token": "<1e770314 ec0350a4 c1be3b5f a3fe0589 81d663e8 e0c3438b db9ef4e7 0f53479b>", "name": "Gaurav"}];
+var jsonFile = __dirname + "/json/users.json"
+
+//Request handling
+app.get('/', function (req, res) {
+   res.sendFile( __dirname + "/html/index.html" );
+})
+
+//List devices 	GET/listUsers
+app.get('/listUsers', function (req, res) {
+	console.log("List devices")
+   	fs.readFile( jsonFile, 'utf8', function (err, data) {
+       console.log( data );
+       res.end( data );
+   	});
+})
 
 
-if(tokens.length == 0) {
-	console.log("Please set token to a valid device token for the push notification service");
-	process.exit();
+//Add device 	POST 	/addUser
+var user = {
+   "user4" : {
+      "name" : "mohit",
+	  "uuid" : "password1",
+      "id": 4
+   }
 }
 
-var ca = ['certificates/entrust_2048_ca.cer'];
-
-/* Connection Options */
-
-var options = {
-        cert: 'certificates/cert.pem',
-        key: 'certificates/key.pem',
-        ca: ca,
-        passphrase: '1234567',
-        production: false,
-        connectionTimeout: 10000
-};
+app.post('/addUser', function (req, res) {
+   console.log("Add device")
+   fs.readFile( jsonFile, 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       data["user4"] = user["user4"];
+       console.log( data );
+       res.end( JSON.stringify(data));
+   });
+})
 
 
-var service = new apn.connection(options);
+//Delete device 	DELETE 		/deleteUser
 
-service.on("connected", function() {
-    console.log("Connected");
-});
+app.get('/deleteUser', function (req, res) {
 
-service.on("transmitted", function(notification, device) {
-    console.log("Notification transmitted to:" + device.token.toString("hex"));
-});
+   // First read existing users.
+   fs.readFile( jsonFile, 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       delete data["user" + 2];
+       
+       console.log( data );
+       res.end( JSON.stringify(data));
+   });
 
-service.on("transmissionError", function(errCode, notification, device) {
-    console.error("Notification caused error: " + errCode + " for device ", device, notification);
-    if (errCode === 8) {
-        console.log("A error code of 8 indicates that the device token is invalid. This could be for a number of reasons - are you using the correct environment? i.e. Production vs. Sandbox");
-    }
-});
-
-service.on("timeout", function () {
-    console.log("Connection Timeout");
-});
-
-service.on("disconnected", function() {
-    console.log("Disconnected from APNS");
-});
-
-service.on("socketError", console.error);
+})
 
 
-//Finally Sending Notifications
-console.log("Sending a tailored notification to %d devices", tokens.length);
-tokens.forEach(function(payload, i) {
-
-    var note = new apn.notification();
-    note.setAlertText("Hello, " + payload.name);
-    note.badge = Math.floor((Math.random() * 99));
-
-    service.pushNotification(note, payload.token);
-
-});
 
 
+//Send notification 	GET 	:id
+
+app.get('/:id', function (req, res) {
+   // First read existing users.
+   fs.readFile( jsonFile, 'utf8', function (err, data) {
+       users = JSON.parse( data );
+       var user = users["user" + req.params.id] 
+       console.log( user );
+       res.end( JSON.stringify(user));
+   });
+})
+
+
+
+//Send notification 	GET 	:id
+
+app.delete('/:id', function (req, res) {
+   // First read existing users.
+   fs.readFile( jsonFile, 'utf8', function (err, data) {
+       users = JSON.parse( data );
+       var user = users["user" + req.params.id] 
+       console.log( user );
+       res.end( JSON.stringify(user));
+   });
+})
+
+
+
+
+//Brodcast 		GET 	/brodcast
+
+
+
+
+
+//Assets handling
+app.use(express.static('public'));
+
+
+//Init Server
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log("Example app listening at http://%s:%s", host, port)
+
+})

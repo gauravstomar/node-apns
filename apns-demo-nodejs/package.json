@@ -1,13 +1,17 @@
 {
-  "private": true,
-  "name": "apns-demo",
-  "description" : "APNS demo app",
-  "version": "0.0.1",
-  "main" : "index.js",
-  "dependencies": {
-    "q": "latest",
-    "apn": "latest",
-    "debug": "latest",
-    "node-forge": "latest"
-  }
+    "private": true,
+    "name": "apns-demo",
+    "description": "APNS demo app",
+    "version": "0.0.1",
+    "main": "index.js",
+    "dependencies": {
+        "q": "latest",
+        "apn": "latest",
+        "debug": "latest",
+        "node-forge": "latest",
+        "express": "latest",
+        "multer": "latest",
+        "body-parser": "latest",
+        "cookie-parser": "latest"
+    }
 }

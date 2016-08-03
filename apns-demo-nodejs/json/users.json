@@ -1,0 +1,17 @@
+{
+ "user1" : {
+  "name" : "Gaurav",
+  "uuid" : "password1",
+  "id": 1
+},
+"user2" : {
+  "name" : "Himanshu",
+  "uuid" : "password2",
+  "id": 2
+},
+"user3" : {
+  "name" : "Satish",
+  "uuid" : "password3",
+  "id": 3
+}
+}
