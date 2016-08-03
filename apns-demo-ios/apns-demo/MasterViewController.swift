@@ -30,7 +30,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         //Rest Application Icon Badge Number
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.notificationRecived(_:)), name: "APNSNotificationRecived", object: nil)
         
@@ -117,6 +116,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     override func viewWillAppear(animated: Bool) {
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
     }

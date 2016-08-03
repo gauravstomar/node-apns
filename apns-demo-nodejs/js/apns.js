@@ -7,7 +7,7 @@
 //
 
 
-var lastBadageCount = 1
+var lastBadageCount = 0
 
 var apn = require('apn');
 
