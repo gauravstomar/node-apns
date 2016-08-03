@@ -146,11 +146,12 @@ app.post('/brodcast', urlencodedParser, function (req, res) {
 
     console.log( data );
    	users = JSON.parse( data );
-   	console.log( users );
-
-   	apns.sendNotification(users, req.body.message)
-
-   	res.end( JSON.stringify({"total-devices": users.length}));
+	if (users.length > 0) {
+	   	apns.sendNotification(users, req.body.message)
+	   	res.end( JSON.stringify({"total-devices": users.length}));
+	} else {
+	   	res.end( "No device found" );
+	}
 
    });
 
