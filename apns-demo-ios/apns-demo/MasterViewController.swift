@@ -36,8 +36,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func notificationRecived(notification: NSNotification) {
         
-        if let message = notification.userInfo?["message"] {
-            insertNewObject(message as! String)
+        if let message = notification.userInfo?["message"] as? String {
+            
+            insertNewObject(message)
+
+            let alertMessage = UIAlertController(title: "Notification", message: message, preferredStyle: .Alert)
+            alertMessage.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertMessage, animated: true, completion: nil)
+
         }
 
     }
