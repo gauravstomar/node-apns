@@ -101,6 +101,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD9A1D461D507076008EA3E9 /* Build configuration list for PBXNativeTarget "apns-demo" */;
 			buildPhases = (
+				5ABC8CC8BB2F2C72ACE0545D /* Rollout.io pre-build */,
 				58848E9064F29D571C2374CD /* [CP] Check Pods Manifest.lock */,
 				CD9A1D2B1D507076008EA3E9 /* Sources */,
 				CD9A1D2C1D507076008EA3E9 /* Frameworks */,
@@ -108,6 +109,7 @@
 				D3A6DDADF005B60472D6575D /* [CP] Embed Pods Frameworks */,
 				A17DD5C837850C7A0A63D927 /* [CP] Copy Pods Resources */,
 				CD3786481D52246D0070831F /* ShellScript */,
+				2F8E8E6E56A66982BA7B2EA1 /* Rollout.io post-build */,
 			);
 			buildRules = (
 			);
@@ -166,6 +168,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2F8E8E6E56A66982BA7B2EA1 /* Rollout.io post-build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Rollout.io post-build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ROLLOUT_lastXcodeprojConfiguration=7 \"${SRCROOT}/Pods/Rollout.io/lib/post-build_xcode_phase\" -k 57a419c4276346bd385bf1b2";
+		};
 		58848E9064F29D571C2374CD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -180,6 +196,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		5ABC8CC8BB2F2C72ACE0545D /* Rollout.io pre-build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Rollout.io pre-build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ROLLOUT_lastXcodeprojConfiguration=7 \"${SRCROOT}/Pods/Rollout.io/lib/pre-build_xcode_phase\"";
 		};
 		A17DD5C837850C7A0A63D927 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

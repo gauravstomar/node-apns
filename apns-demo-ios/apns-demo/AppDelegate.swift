@@ -11,7 +11,7 @@ import CoreData
 
 import Fabric
 import Crashlytics
-
+import Rollout
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         controller.managedObjectContext = self.managedObjectContext
         
         
+        Rollout.setupWithKey("57a419c4276346bd385bf1b2");
         
         //Register for APNS
         let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
